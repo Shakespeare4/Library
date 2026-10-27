@@ -24,25 +24,26 @@ public class LibraryDB {
     // Add a record at the end of the file
     public void append(String booknum, String title,
             int qty, int ucost) throws IOException {
-                if (booknum.length() < IDLEN) {
-                    for (int i = IDLEN - booknum.length(); i < IDLEN; i++) {
-                        booknum += " ";
-                    }
-                } else if (booknum.length() > IDLEN) {
-                    booknum = booknum.substring(0, IDLEN);
-                }
-                if (title.length() < TITLEN) {
-                    for (int i = TITLEN - title.length(); i < TITLEN; i++) {
-                        title += " ";
-                    }
-                } else if (title.length() > TITLEN) {
-                    title = title.substring(0, TITLEN);
-                }
+        if (booknum.length() < IDLEN) {
+            while (booknum.length() < IDLEN) {
+                booknum += " ";
+            }
+        } else if (booknum.length() > IDLEN) {
+            booknum = booknum.substring(0, IDLEN);
+        }
+        if (title.length() < TITLEN) {
+            while (title.length() < TITLEN) {
+                title += " ";
+            }
+        } else if (title.length() > TITLEN) {
+            title = title.substring(0, TITLEN);
+        }
         raf.seek(raf.length());
 
         write(booknum, title, qty, ucost);
-    
-            }
+
+    }
+
     // Close the database
     public void close() {
         try {
@@ -165,11 +166,11 @@ public class LibraryDB {
             this.ucost = ucost;
         }
 
-        public String getPartnum() {
+        public String getBookNum() {
             return booknum;
         }
 
-        public String getDesc() {
+        public String getTitle() {
             return title;
         }
 
@@ -183,13 +184,11 @@ public class LibraryDB {
 
         @Override
         public String toString() {
-            return "Part number: " + booknum
-                    + ", Description: " + title
+            return "Book number: " + booknum
+                    + ", Title: " + title
                     + ", Quantity: " + qty
                     + ", Unit cost: " + ucost;
         }
     }
 
-    
-    
 }
